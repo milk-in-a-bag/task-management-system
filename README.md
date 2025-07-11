@@ -1,2 +1,37 @@
-# task management system
-🗂️ Task Management System – Internship Coding Challenge This is a simple task management web application built in PHP and JavaScript for a Software Engineering Internship coding challenge.  The system allows administrators to manage users and assign tasks with deadlines. Users can view and update the status of their assigned tasks. Email notifications are sent to users upon task assignment.  🔧 Features Admin Panel  Create, update, and delete users  Assign tasks with deadlines  User Dashboard  View assigned tasks  Update task status: Pending, In Progress, Completed  Email Notifications  Users receive an email when a new task is assigned  🛠️ Tech Stack Backend: PHP (Vanilla)  Frontend: HTML, CSS, JavaScript  Database: MySQL  Email: PHP mail() or PHPMailer  📦 Setup Import the SQL dump file into your MySQL server  Configure database and email credentials in the config files  Host locally or online using Apache (e.g. XAMPP or 000WebHost)
+# 🗂️ Task Management System – Cytonn Internship Coding Challenge
+
+This is a lightweight task management web application developed as part of the Cytonn Software Engineering Internship coding challenge.
+
+The system enables administrators to manage users and assign tasks, while allowing users to track and update their progress. Email notifications are sent when new tasks are assigned.
+
+---
+
+## 🔧 Features
+
+### ✅ Admin Panel
+- Create, edit, and delete users
+- Assign tasks to users with deadlines
+
+### 🙋‍♂️ User Dashboard
+- View assigned tasks
+- Update task status: `Pending`, `In Progress`, `Completed`
+
+### ✉️ Email Notification
+- Users receive an email when a task is assigned
+
+---
+
+## 🛠️ Tech Stack
+
+- **Backend**: PHP (Vanilla)
+- **Frontend**: HTML, CSS, JavaScript (Vanilla)
+- **Database**: MySQL
+- **Email**: PHP `mail()` function or PHPMailer
+
+---
+
+## 📦 Setup Instructions
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/milk-in-a-bag/task-management-system.git
