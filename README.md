@@ -1,6 +1,6 @@
-# 🗂️ Task Management System – Cytonn Internship Coding Challenge
+# 🗂️ Task Management System
 
-This is a lightweight task management web application developed as part of the Cytonn Software Engineering Internship coding challenge.
+This is a lightweight task management web application developed as part of a Software Engineering Internship coding challenge.
 
 The system enables administrators to manage users and assign tasks, while allowing users to track and update their progress. Email notifications are sent when new tasks are assigned.
 
