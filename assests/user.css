@@ -1,0 +1,129 @@
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: #f4f5f7;
+  margin: 0;
+  padding: 30px;
+  color: #333;
+}
+
+.container {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  max-width: 1000px;
+  margin: auto;
+}
+
+h2,
+h3 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #2c2c2c;
+}
+
+.logout {
+  display: inline-block;
+  background: #e53935;
+  color: white;
+  padding: 10px 0;
+  border-radius: 6px;
+  text-align: center;
+  text-decoration: none;
+  font-weight: 500;
+  border: none;
+  margin-bottom: 20px;
+  margin: auto;
+  display: block;
+  max-width: 120px;
+  transition: background 0.3s ease;
+}
+
+.logout:hover {
+  background: #c62828;
+}
+
+.no-tasks {
+  text-align: center;
+  font-style: italic;
+  color: #555;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  margin-top: 20px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+}
+
+th,
+td {
+  padding: 8px 12px;
+  border: 1px solid #eee; /* ← Added vertical borders */
+  text-align: left;
+  font-size: 15px;
+}
+
+th {
+  padding: 10px 12px !important;
+  background: #f1f2f6;
+  font-weight: 600;
+}
+
+tr:last-child td {
+  border-bottom: 1px solid #eee;
+}
+
+select,
+button {
+  padding: 8px 10px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  outline: none;
+  background-color: #fff;
+}
+
+button {
+  background-color: #3f51b5;
+  color: #fff;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-left: 6px;
+}
+
+button:hover {
+  background-color: #2c3e91;
+}
+
+form {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Status font colors */
+td:nth-child(4) {
+  font-weight: 600;
+  color: #333;
+}
+
+.status {
+  font-weight: 600;
+}
+
+.status.pending {
+  color: #e53935; /* bright red */
+}
+
+.status.in-progress {
+  color: #fb8c00; /* bright orange */
+}
+
+.status.completed {
+  color: #43a047; /* bright green */
+}

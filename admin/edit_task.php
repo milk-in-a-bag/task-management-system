@@ -9,18 +9,15 @@ if ($_SESSION['user']['role'] !== 'admin') {
 $id = $_GET['id'] ?? null;
 if (!$id) die("Task ID not provided");
 
-// Fetch task
 $stmt = $pdo->prepare("SELECT * FROM tasks WHERE id = ?");
 $stmt->execute([$id]);
 $task = $stmt->fetch();
 
 if (!$task) die("Task not found");
 
-// Fetch users for assignment dropdown
 $users_stmt = $pdo->query("SELECT id, name FROM users ORDER BY name");
 $users = $users_stmt->fetchAll();
 
-// Handle form update
 if (isset($_POST['update_task'])) {
     $title = $_POST['title'];
     $description = $_POST['description'];
@@ -36,34 +33,49 @@ if (isset($_POST['update_task'])) {
 }
 ?>
 
-<h2>Edit Task</h2>
-<form method="POST">
-    <label>Title:</label><br>
-    <input type="text" name="title" value="<?= htmlspecialchars($task['title']) ?>" required><br><br>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Task</title>
+  <link rel="stylesheet" href="../assests/edit-task.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Edit Task</h2>
 
-    <label>Description:</label><br>
-    <textarea name="description" rows="4" required><?= htmlspecialchars($task['description']) ?></textarea><br><br>
+    <form method="POST">
+      <label>Title:</label>
+      <input type="text" name="title" value="<?= htmlspecialchars($task['title']) ?>" required>
 
-    <label>Deadline:</label><br>
-    <input type="date" name="deadline" value="<?= $task['deadline'] ?>" required><br><br>
+      <label>Description:</label>
+      <textarea name="description" rows="4" required><?= htmlspecialchars($task['description']) ?></textarea>
 
-    <label>Status:</label><br>
-    <select name="status">
+      <label>Deadline:</label>
+      <input type="date" name="deadline" value="<?= $task['deadline'] ?>" required>
+
+      <label>Status:</label>
+      <select name="status">
         <option value="Pending" <?= $task['status'] == 'Pending' ? 'selected' : '' ?>>Pending</option>
         <option value="In Progress" <?= $task['status'] == 'In Progress' ? 'selected' : '' ?>>In Progress</option>
         <option value="Completed" <?= $task['status'] == 'Completed' ? 'selected' : '' ?>>Completed</option>
-    </select><br><br>
+      </select>
 
-    <label>Assign to:</label><br>
-    <select name="assigned_to" required>
+      <label>Assign to:</label>
+      <select name="assigned_to" required>
         <?php foreach ($users as $user): ?>
-            <option value="<?= $user['id'] ?>" <?= $user['id'] == $task['assigned_to'] ? 'selected' : '' ?>>
-                <?= htmlspecialchars($user['name']) ?>
-            </option>
+          <option value="<?= $user['id'] ?>" <?= $user['id'] == $task['assigned_to'] ? 'selected' : '' ?>>
+            <?= htmlspecialchars($user['name']) ?>
+          </option>
         <?php endforeach; ?>
-    </select><br><br>
+      </select>
 
-    <button type="submit" name="update_task">Update Task</button>
-</form>
+      <button type="submit" name="update_task">Update Task</button>
+    </form>
 
-<a href="tasks.php">← Back to Tasks</a>
+    <div class="back-link">
+      <a href="tasks.php">← Back to Tasks</a>
+    </div>
+  </div>
+</body>
+</html>

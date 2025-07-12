@@ -6,7 +6,7 @@ if ($_SESSION['user']['role'] !== 'admin') {
     die("Access denied");
 }
 
-// Fetch all tasks with user info
+// Fetch tasks with user info
 $stmt = $pdo->query("
     SELECT tasks.*, users.name AS assignee_name 
     FROM tasks 
@@ -15,7 +15,7 @@ $stmt = $pdo->query("
 ");
 $tasks = $stmt->fetchAll();
 
-// Fetch all users for assignment dropdown
+// Fetch all users
 $users_stmt = $pdo->query("SELECT id, name FROM users ORDER BY name");
 $users = $users_stmt->fetchAll();
 
@@ -29,7 +29,7 @@ if (isset($_POST['add_task'])) {
     $insert = $pdo->prepare("INSERT INTO tasks (title, description, deadline, assigned_to) VALUES (?, ?, ?, ?)");
     $insert->execute([$title, $description, $deadline, $assigned_to]);
 
-    // Fetch user email
+    // Send email
     $user_stmt = $pdo->prepare("SELECT name, email FROM users WHERE id = ?");
     $user_stmt->execute([$assigned_to]);
     $user = $user_stmt->fetch();
@@ -45,67 +45,82 @@ if (isset($_POST['add_task'])) {
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Admin - Manage Tasks</title>
+  <meta charset="UTF-8">
+  <title>Manage Tasks</title>
+  <link rel="stylesheet" href="../assests/admin-tasks.css">
 </head>
 <body>
+  <div class="container">
+    <h2>All Tasks</h2>
+    <div class="links">
+      <a href="dashboard.php">← Back to Dashboard</a>
+    </div>
 
-<h2>All Tasks</h2>
-<a href="dashboard.php">← Back to Dashboard</a><br><br>
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Assigned To</th>
+          <th>Deadline</th>
+          <th>Status</th>
+          <th>Created</th>
+          <th>Completed</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach ($tasks as $task): ?>
+        <tr>
+          <td><?= htmlspecialchars($task['title']) ?></td>
+          <td><?= nl2br(htmlspecialchars($task['description'])) ?></td>
+          <td><?= htmlspecialchars($task['assignee_name']) ?></td>
+          <td><?= $task['deadline'] ?></td>
+          <td>
+            <span class="status-badge status-<?= strtolower(str_replace(' ', '-', $task['status'])) ?>">
+            <?= $task['status'] ?>
+            </span>
+          </td>
 
-<!-- Display tasks -->
-<table border="1" cellpadding="10" cellspacing="0">
-    <tr>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Assigned To</th>
-        <th>Deadline</th>
-        <th>Status</th>
-        <th>Created At</th>
-        <th>Completed At</th>
-        <th>Actions</th>
-    </tr>
-    <?php foreach ($tasks as $task): ?>
-    <tr>
-        <td><?= htmlspecialchars($task['title']) ?></td>
-        <td><?= nl2br(htmlspecialchars($task['description'])) ?></td>
-        <td><?= htmlspecialchars($task['assignee_name']) ?></td>
-        <td><?= $task['deadline'] ?></td>
-        <td><?= $task['status'] ?></td>
-        <td><?= $task['created_at'] ?></td>
-        <td><?= $task['completed_at'] ?? '—' ?></td>
-        <td>
+          <td><?= date('Y-m-d H:i', strtotime($task['created_at'])) ?></td>
+          <td>
+            <?= $task['completed_at'] ? date('Y-m-d H:i', strtotime($task['completed_at'])) : '—' ?>
+          </td>
+
+          <td>
             <a href="edit_task.php?id=<?= $task['id'] ?>">Edit</a> |
-            <a href="delete_task.php?id=<?= $task['id'] ?>" onclick="return confirm('Are you sure you want to delete this task?')">Delete</a>
-        </td>
-    </tr>
-    <?php endforeach; ?>
-</table>
+            <a href="delete_task.php?id=<?= $task['id'] ?>" onclick="return confirm('Delete this task?')">Delete</a>
+          </td>
+        </tr>
+        <?php endforeach; ?>
+      </tbody>
+    </table>
 
-<hr>
+    <hr>
 
-<h3>Create New Task</h3>
-<form method="POST">
-    <label>Title:</label><br>
-    <input type="text" name="title" required><br><br>
+    <h3>Create New Task</h3>
+    <form method="POST">
+      <label>Title:</label>
+      <input type="text" name="title" required>
 
-    <label>Description:</label><br>
-    <textarea name="description" rows="4" required></textarea><br><br>
+      <label>Description:</label>
+      <textarea name="description" rows="4" required></textarea>
 
-    <label>Deadline:</label><br>
-    <input type="date" name="deadline" required><br><br>
+      <label>Deadline:</label>
+      <input type="date" name="deadline" required>
 
-    <label>Assign to:</label><br>
-    <select name="assigned_to" required>
+      <label>Assign to:</label>
+      <select name="assigned_to" required>
         <option value="">-- Select User --</option>
         <?php foreach ($users as $user): ?>
-            <option value="<?= $user['id'] ?>"><?= htmlspecialchars($user['name']) ?></option>
+          <option value="<?= $user['id'] ?>"><?= htmlspecialchars($user['name']) ?></option>
         <?php endforeach; ?>
-    </select><br><br>
+      </select>
 
-    <button type="submit" name="add_task">Create Task</button>
-</form>
-
+      <button type="submit" name="add_task">Create Task</button>
+    </form>
+  </div>
 </body>
 </html>

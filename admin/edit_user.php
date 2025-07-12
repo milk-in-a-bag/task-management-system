@@ -34,23 +34,37 @@ if (isset($_POST['update'])) {
 }
 ?>
 
-<h2>Edit User</h2>
-<form method="POST">
-    <label>Name:</label><br>
-    <input type="text" name="name" value="<?= htmlspecialchars($user['name']) ?>" required><br><br>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit User</title>
+  <link rel="stylesheet" href="../assests/edit-user.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Edit User</h2>
 
-    <label>Email:</label><br>
-    <input type="email" name="email" value="<?= htmlspecialchars($user['email']) ?>" required><br><br>
+    <form method="POST">
+      <label>Name</label>
+      <input type="text" name="name" value="<?= htmlspecialchars($user['name']) ?>" required>
 
-    <label>Password (leave blank to keep current):</label><br>
-    <input type="password" name="password"><br><br>
+      <label>Email</label>
+      <input type="email" name="email" value="<?= htmlspecialchars($user['email']) ?>" required>
 
-    <label>Role:</label><br>
-    <select name="role">
+      <label>Password (leave blank to keep current)</label>
+      <input type="password" name="password">
+
+      <label>Role</label>
+      <select name="role">
         <option value="user" <?= $user['role'] === 'user' ? 'selected' : '' ?>>User</option>
         <option value="admin" <?= $user['role'] === 'admin' ? 'selected' : '' ?>>Admin</option>
-    </select><br><br>
+      </select>
 
-    <button type="submit" name="update">Update User</button>
-</form>
-<a href="users.php">← Back to Users</a>
+      <button type="submit" name="update">Update User</button>
+    </form>
+
+    <a class="back-link" href="users.php">← Back to Users</a>
+  </div>
+</body>
+</html>

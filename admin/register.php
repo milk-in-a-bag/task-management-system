@@ -3,7 +3,6 @@ session_start();
 require_once '../includes/auth.php';
 require_once '../includes/db.php';
 
-// Restrict to admin only
 if ($_SESSION['user']['role'] !== 'admin') {
     die("Access denied");
 }
@@ -17,29 +16,43 @@ if (isset($_POST['register'])) {
     $stmt = $pdo->prepare("INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)");
     $stmt->execute([$name, $email, $password, $role]);
 
-    $success = "User registered successfully!";
+    header("Location: users.php?success=1");
+    exit;
 }
 ?>
 
-<h2>Register New User</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register User</title>
+  <link rel="stylesheet" href="../assests/admin-register.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Register New User</h2>
 
-<?php if (isset($success)) echo "<p style='color:green;'>$success</p>"; ?>
+    <form method="POST" action="">
+      <label>Name:</label>
+      <input type="text" name="name" required>
 
-<form method="POST" action="">
-    <label>Name:</label><br>
-    <input type="text" name="name" required><br><br>
+      <label>Email:</label>
+      <input type="email" name="email" required><br>
 
-    <label>Email:</label><br>
-    <input type="email" name="email" required><br><br>
+      <label>Password:</label>
+      <input type="password" name="password" required><br>
 
-    <label>Password:</label><br>
-    <input type="password" name="password" required><br><br>
-
-    <label>Role:</label><br>
-    <select name="role">
+      <label>Role:</label>
+      <select name="role">
         <option value="user">User</option>
         <option value="admin">Admin</option>
-    </select><br><br>
+      </select><br><br>
 
-    <button type="submit" name="register">Register</button>
-</form>
+      <button type="submit" name="register">Register</button>
+    </form>
+
+    <br>
+    <a href="dashboard.php">← Back to Dashboard</a>
+  </div>
+</body>
+</html>
