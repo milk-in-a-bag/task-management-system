@@ -29,13 +29,30 @@ if (isset($_POST['add_task'])) {
     $insert = $pdo->prepare("INSERT INTO tasks (title, description, deadline, assigned_to) VALUES (?, ?, ?, ?)");
     $insert->execute([$title, $description, $deadline, $assigned_to]);
 
+    // Fetch user email
+    $user_stmt = $pdo->prepare("SELECT name, email FROM users WHERE id = ?");
+    $user_stmt->execute([$assigned_to]);
+    $user = $user_stmt->fetch();
+
+    if ($user) {
+        require_once '../includes/mailer.php';
+        sendTaskAssignedEmail($user['email'], $user['name'], $title, $deadline);
+    }
+
     header("Location: tasks.php");
     exit;
 }
 ?>
 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin - Manage Tasks</title>
+</head>
+<body>
+
 <h2>All Tasks</h2>
-<a href="dashboard.php">← Back to Dashboard</a>
+<a href="dashboard.php">← Back to Dashboard</a><br><br>
 
 <!-- Display tasks -->
 <table border="1" cellpadding="10" cellspacing="0">
@@ -47,6 +64,7 @@ if (isset($_POST['add_task'])) {
         <th>Status</th>
         <th>Created At</th>
         <th>Completed At</th>
+        <th>Actions</th>
     </tr>
     <?php foreach ($tasks as $task): ?>
     <tr>
@@ -88,3 +106,6 @@ if (isset($_POST['add_task'])) {
 
     <button type="submit" name="add_task">Create Task</button>
 </form>
+
+</body>
+</html>

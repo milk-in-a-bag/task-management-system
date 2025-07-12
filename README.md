@@ -9,14 +9,17 @@ The system enables administrators to manage users and assign tasks, while allowi
 ## 🔧 Features
 
 ### ✅ Admin Panel
+
 - Create, edit, and delete users
 - Assign tasks to users with deadlines
 
 ### 🙋‍♂️ User Dashboard
+
 - View assigned tasks
 - Update task status: `Pending`, `In Progress`, `Completed`
 
 ### ✉️ Email Notification
+
 - Users receive an email when a task is assigned
 
 ---
@@ -26,7 +29,7 @@ The system enables administrators to manage users and assign tasks, while allowi
 - **Backend**: PHP (Vanilla)
 - **Frontend**: HTML, CSS, JavaScript (Vanilla)
 - **Database**: MySQL
-- **Email**: PHP `mail()` function or PHPMailer
+- **Email**: PHPMailer
 
 ---
 
@@ -35,3 +38,4 @@ The system enables administrators to manage users and assign tasks, while allowi
 1. **Clone the repository**
    ```bash
    git clone https://github.com/milk-in-a-bag/task-management-system.git
+   ```
