@@ -27,7 +27,7 @@ The system enables administrators to manage users and assign tasks, while allowi
 ## 🛠️ Tech Stack
 
 - **Backend**: PHP (Vanilla)
-- **Frontend**: HTML, CSS, JavaScript (Vanilla)
+- **Frontend**: HTML, CSS,
 - **Database**: MySQL
 - **Email**: PHPMailer
 

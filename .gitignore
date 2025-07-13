@@ -4,3 +4,4 @@ vendor/
 .env
 .DS_Store
 includes/config.php
+database.sql
